@@ -1,12 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { fetchItems, addToCart } from '../services/api';
 import ItemCard from '../components/ItemCard.jsx';
+import { Link } from 'react-router-dom';
 
 const HomePage = () => {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
-    fetchItems().then(response => setItems(response.data));
+    fetchItems().then(response => {
+      console.log('Fetched items:', response.data);
+      setItems(response.data);
+    }).catch(error => {
+      console.error('Error fetching items:', error);
+    });
   }, []);
 
   const handleAddToCart = async (item) => {
@@ -31,6 +37,7 @@ const HomePage = () => {
           <ItemCard key={item.sku} item={item} addToCart={handleAddToCart} />
         ))}
       </div>
+      <Link to="/cart">Go to Cart</Link>
     </div>
   );
 };

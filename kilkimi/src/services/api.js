@@ -5,7 +5,13 @@ const api = axios.create({
 });
 
 export const fetchItems = () => api.get('/items');
-export const addToCart = (item) => api.post('/cart/add', item);
-export const getCart = () => api.get('/cart');
+export const addToCart = (item) => {
+  console.log('Adding item to cart:', item);
+  return api.post('/cart/add', item);
+};
+export const getCart = () => {
+  console.log('Fetching cart from:', api.defaults.baseURL + '/cart');
+  return api.get('/cart');
+};
 
 export default api;
